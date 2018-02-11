@@ -19,5 +19,7 @@ public class MovieDetailsActivity extends BaseActivity {
 
         MoviesResponse moviesResponse = intent.getParcelableExtra(MainActivity.MOVIE_DETAILS);
         showToast(new Gson().toJson(moviesResponse));
+
+        // This is dummy comment just for testing
     }
 }
