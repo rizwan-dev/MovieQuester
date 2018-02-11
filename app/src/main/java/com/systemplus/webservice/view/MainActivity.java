@@ -1,15 +1,13 @@
 package com.systemplus.webservice.view;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.systemplus.webservice.R;
 import com.systemplus.webservice.adapter.MovieClassAdapter;
 import com.systemplus.webservice.api.ApiClient;
@@ -25,13 +23,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static final String MOVIE_DETAILS = "MOVIE_DETAILS";
     RecyclerView moviesList;
 
     private static final String API_KEY = "7e8f60e325cd06e164799af1e317d7a7";
-    private ProgressDialog mProgressDialog;
     private MovieClassAdapter mMovieClassAdapter;
 
     @Override
@@ -49,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         showProgressDialog();
                         Result result = mMovieClassAdapter.getItem(position);
-//                        Toast.makeText(MainActivity.this, new Gson().toJson(result), Toast.LENGTH_LONG).show();
                         Call<MoviesResponse> call = apiService.getMovieDetails(result.getId(), API_KEY);
                         call.enqueue(new Callback<MoviesResponse>() {
                             @Override
@@ -95,24 +91,5 @@ public class MainActivity extends AppCompatActivity {
                 showToast(t.getMessage());
             }
         });
-    }
-
-    private void hidProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-
-    }
-
-    private void showProgressDialog() {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Loading data, Please wait");
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
-    }
-
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

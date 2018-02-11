@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.systemplus.webservice.R;
 import com.systemplus.webservice.model.MoviesResponse;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +19,5 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         MoviesResponse moviesResponse = intent.getParcelableExtra(MainActivity.MOVIE_DETAILS);
         showToast(new Gson().toJson(moviesResponse));
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
