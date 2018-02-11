@@ -58,4 +58,8 @@ public class MovieClassAdapter extends RecyclerView.Adapter<MovieClassAdapter.Mo
 
         }
     }
+
+    public Result getItem(int position) {
+        return results.get(position);
+    }
 }

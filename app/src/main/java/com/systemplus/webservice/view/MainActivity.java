@@ -8,11 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.systemplus.webservice.R;
 import com.systemplus.webservice.adapter.MovieClassAdapter;
 import com.systemplus.webservice.api.ApiClient;
 import com.systemplus.webservice.api.ApiInterface;
 import com.systemplus.webservice.model.MovieData;
+import com.systemplus.webservice.model.MoviesResponse;
 import com.systemplus.webservice.model.Result;
 import com.systemplus.webservice.util.RecyclerItemClickListener;
 
@@ -43,7 +45,25 @@ public class MainActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Result  result = mMovieClassAdapter.getItemViewType()
+                        showProgressDialog();
+                        Result result = mMovieClassAdapter.getItem(position);
+//                        Toast.makeText(MainActivity.this, new Gson().toJson(result), Toast.LENGTH_LONG).show();
+                        Call<MoviesResponse> call = apiService.getMovieDetails(result.getId(), API_KEY);
+                        call.enqueue(new Callback<MoviesResponse>() {
+                            @Override
+                            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                                hidProgressDialog();
+                                MoviesResponse moviesResponse = response.body();
+                                showToast(new Gson().toJson(moviesResponse).toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                                hidProgressDialog();
+
+                            }
+                        });
+
 
                     }
                 })
@@ -59,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 MovieData movieData = response.body();
                 List<Result> moviesResult = movieData.getResults();
 
-                 mMovieClassAdapter = new MovieClassAdapter(moviesResult, MainActivity.this);
+                mMovieClassAdapter = new MovieClassAdapter(moviesResult, MainActivity.this);
                 moviesList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 moviesList.setAdapter(mMovieClassAdapter);
 
