@@ -9,6 +9,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -64,7 +65,11 @@ public class MapDemoActivity extends FragmentActivity implements OnMapReadyCallb
 
                 mMap.animateCamera(cu);
 
-                PolylineOptions polylineOptions = new PolylineOptions().width(10).geodesic(true).color(Color.CYAN);
+                mMap.addMarker(new MarkerOptions().position(DRIVER_LOCATION));
+
+                mMap.addMarker(new MarkerOptions().position(CURBEE_LOCATION));
+
+                PolylineOptions polylineOptions = new PolylineOptions().width(10).color(Color.CYAN);
                 List<LatLng> points =   new ArrayList<>();
                 points.add(CURBEE_LOCATION);
                 points.add(DRIVER_LOCATION);
