@@ -52,22 +52,27 @@ public class MapDemoActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.include(DRIVER_LOCATION);
+                builder.include(CURBEE_LOCATION);
+                LatLngBounds bounds = builder.build();
 
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(DRIVER_LOCATION);
-        builder.include(CURBEE_LOCATION);
-        LatLngBounds bounds = builder.build();
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 200);
 
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 200);
+                mMap.animateCamera(cu);
 
-        mMap.animateCamera(cu);
+                PolylineOptions polylineOptions = new PolylineOptions().width(10).geodesic(true).color(Color.CYAN);
+                List<LatLng> points =   new ArrayList<>();
+                points.add(CURBEE_LOCATION);
+                points.add(DRIVER_LOCATION);
 
-        PolylineOptions polylineOptions = new PolylineOptions().width(10).geodesic(true).color(Color.CYAN);
-        List<LatLng> points =   new ArrayList<>();
-        points.add(CURBEE_LOCATION);
-        points.add(DRIVER_LOCATION);
+                Polyline polyline = mMap.addPolyline(polylineOptions);
+            }
+        });
 
-        Polyline polyline = mMap.addPolyline(polylineOptions);
     }
 
 }

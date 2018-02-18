@@ -36,15 +36,17 @@
         <activity
             android:name=".view.MapsActivity"
             android:label="@string/title_activity_maps">
+
+        </activity>
+        <activity
+            android:name=".view.MapDemoActivity"
+            android:label="@string/title_activity_map_demo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.MapDemoActivity"
-            android:label="@string/title_activity_map_demo"></activity>
     </application>
 
 </manifest>
