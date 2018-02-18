@@ -137,7 +137,7 @@ public class MapDemoActivity extends FragmentActivity implements OnMapReadyCallb
         final ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        String url = AppConstants.URL_GOOGLE_DIRECTION_API + "18.568407,73.907410&destination=18.560410,73.945016&mode=car&alternatives=false&key=" + AppConstants.GOOGLE_DIRECTION_API_KEY;
+        String url = AppConstants.URL_GOOGLE_DIRECTION_API + "18.568407,73.907410&destination=18.560410,73.945016&mode=car&alternatives=true&key=" + AppConstants.GOOGLE_DIRECTION_API_KEY;
         Call<PolyLineResponse> polyLineResponseCall = apiService.getPolyLine(url);
 
         polyLineResponseCall.enqueue(new Callback<PolyLineResponse>() {
