@@ -10,14 +10,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
 import com.systemplus.webservice.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MapDemoActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -28,6 +34,13 @@ public class MapDemoActivity extends FragmentActivity implements OnMapReadyCallb
 
     private static final LatLng CURBEE_LOCATION = new LatLng(18.543440, 73.905482   );
 
+    private static final int PATTERN_DASH_LENGTH_PX = 20;
+    private static final int PATTERN_GAP_LENGTH_PX = 20;
+    private static final PatternItem DOT = new Dot();
+    private static final PatternItem DASH = new Dash(PATTERN_DASH_LENGTH_PX);
+    private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
+
+    private static final List<PatternItem> PATTERN_POLYGON_ALPHA = Arrays.asList(GAP, DASH);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +86,13 @@ public class MapDemoActivity extends FragmentActivity implements OnMapReadyCallb
                 List<LatLng> points =   new ArrayList<>();
                 points.add(CURBEE_LOCATION);
                 points.add(DRIVER_LOCATION);
+                polylineOptions.addAll(points);
 
                 Polyline polyline = mMap.addPolyline(polylineOptions);
+
+                polyline.setEndCap(new RoundCap());
+                polyline.setStartCap(new RoundCap());
+                polyline.setPattern(PATTERN_POLYGON_ALPHA);
             }
         });
 
