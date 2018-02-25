@@ -2,4 +2,6 @@
     <string name="app_name">Webservice</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_map_demo">Map</string>
+    <string name="title_activity_place_maps">Map</string>
+    <string name="title_activity_place_demo_maps">Map</string>
 </resources>
